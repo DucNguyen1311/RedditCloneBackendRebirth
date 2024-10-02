@@ -3,6 +3,8 @@ package com.backend.RedditClone.Security;
 import com.backend.RedditClone.Entity.User;
 import com.backend.RedditClone.Repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +14,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 @Service
 public class AccountDetailService implements UserDetailsService {
+    private static final Logger log = LoggerFactory.getLogger(AccountDetailService.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -19,10 +22,11 @@ public class AccountDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         boolean valid = EmailValidator.getInstance().isValid(username);
         User u;
+        System.out.println("sub");
         if (valid) {
-            u = userRepository.findAccountByUsername(username);
-        } else {
             u = userRepository.findAccountByEmail(username);
+        } else {
+            u = userRepository.findAccountByUsername(username);
         }
         if (u == null) {
             throw new UsernameNotFoundException(username);
