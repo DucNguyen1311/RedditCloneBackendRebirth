@@ -2,10 +2,15 @@ package com.backend.RedditClone.Controller;
 
 import java.util.Objects;
 
+import com.backend.RedditClone.DTO.AuthorizationDTO;
+import com.backend.RedditClone.Repository.UserRepository;
 import com.backend.RedditClone.Security.AccountDetailService;
 import com.backend.RedditClone.Security.JwtRequest;
 import com.backend.RedditClone.Security.JwtResponse;
 import com.backend.RedditClone.Security.JwtTokenUtil;
+import com.backend.RedditClone.Service.ServiceImp.UserServiceImp;
+import com.backend.RedditClone.Service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 public class JwtController {
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -37,9 +44,8 @@ public class JwtController {
                     .loadUserByUsername(authenticationRequest.getUsername());
 
             final String token = jwtTokenUtil.generateToken(userDetails);
-
-            System.out.println(token);
-            return ResponseEntity.ok(new JwtResponse(token));
+            AuthorizationDTO dto = new AuthorizationDTO(token, userService.findUserByUsername(jwtTokenUtil.getUsernameFromToken(token)).getId());
+            return ResponseEntity.ok(dto);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }

@@ -61,7 +61,7 @@ public class SecurityConfig     {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.
                 addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).
-                authorizeHttpRequests(x -> x.requestMatchers("/authentication").permitAll().requestMatchers("/register").permitAll().anyRequest().authenticated()).
+                authorizeHttpRequests(x -> x.requestMatchers("/authentication","/register","/v3/**", "/swagger-ui/**").permitAll().anyRequest().authenticated()).
                 csrf(AbstractHttpConfigurer::disable).
                 exceptionHandling(e->e.authenticationEntryPoint(jwtAuthenticationEntryPoint)).
                 sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

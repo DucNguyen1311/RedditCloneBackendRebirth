@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserService implements com.backend.RedditClone.Service.UserService {
+public class UserServiceImp implements com.backend.RedditClone.Service.UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -20,6 +20,15 @@ public class UserService implements com.backend.RedditClone.Service.UserService 
         } else {
             userRepository.save(new User(new BCryptPasswordEncoder().encode(registerRequest.getPassword()), registerRequest.getEmail()));
             return 0;
+        }
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        try {
+            return userRepository.findAccountByUsername(username);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

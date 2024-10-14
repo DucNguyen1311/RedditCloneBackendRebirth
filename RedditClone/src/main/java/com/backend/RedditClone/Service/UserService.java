@@ -1,5 +1,6 @@
 package com.backend.RedditClone.Service;
 
+import com.backend.RedditClone.Entity.User;
 import com.backend.RedditClone.Payload.RegisterRequest;
 import org.springframework.stereotype.Service;
 
@@ -11,5 +12,5 @@ public interface UserService {
     if account saved succesfully, return 0;
      **/
     int saveUserToDatabase(RegisterRequest registerRequest);
-
+    User findUserByUsername(String username);
 }

@@ -14,7 +14,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 @Service
 public class AccountDetailService implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(AccountDetailService.class);
     @Autowired
     private UserRepository userRepository;
 
