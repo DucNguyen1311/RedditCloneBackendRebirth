@@ -43,7 +43,7 @@ public class Comment {
                 java.time.temporal.ChronoUnit.SECONDS
         );
         this.content = commentRequest.getContent();
-        this.parent = commentRequest.getParent().isEmpty() ? this.postid : commentRequest.getParent();
+        this.parent = commentRequest.getParent().isEmpty() ? this.commentId : commentRequest.getParent();
         this.karma = 0;
     }
 }
