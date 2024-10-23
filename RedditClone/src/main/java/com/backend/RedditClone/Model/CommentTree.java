@@ -15,14 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 public class CommentTree {
     private List<CommentTree> commentTrees;
-    private Comment comment;
+    private CommentWithUsername comment;
 
-    public CommentTree(Comment comment) {
+    public CommentTree(CommentWithUsername comment) {
         this.comment = comment;
         this.commentTrees = new ArrayList<>();
     }
 
-    public void addComment(Comment comment) {
+    public void addComment(CommentWithUsername comment) {
         this.commentTrees.add(new CommentTree(comment));
     }
 
