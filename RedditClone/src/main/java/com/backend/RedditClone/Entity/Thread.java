@@ -37,6 +37,10 @@ public class Thread {
     private Boolean isPublic;
     @Column(name="avatarpath")
     private String avatarpath;
+    @Column(name="wallpath")
+    private String wallpath;
+    @Column(name="popularity")
+    private Integer popularity;
 
     public Thread(String name, String description, String rules, String categories, java.sql.Date cakeDate, Boolean isPublic) {
         this.id = UUID.randomUUID().toString().replace("-", "");
@@ -60,6 +64,8 @@ public class Thread {
                 java.time.temporal.ChronoUnit.SECONDS
         );
         this.isPublic = threadRequest.getIsPublic();
-        this.avatarpath = "./public/images/" + threadRequest.getName() + ".png";
+        this.avatarpath = "./public/images/" + threadRequest.getName() + "avatar.png";
+        this.wallpath = "./public/images/" + threadRequest.getName() + "wall.png";
+        this.popularity = 0;
     }
 }
